@@ -1,0 +1,63 @@
+body {
+    margin: 0;
+    padding: 0;
+
+    background-image: url(/static/galaxy.jpeg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+    background-size: cover;
+
+    font-family: 'Noto Sans', sans-serif;
+    color: #f1f3f5;
+}
+
+header {
+    top: 0;
+
+    box-sizing: border-box;
+
+    width: 100%;
+
+    padding: 1em 2em 1em 2em;
+
+    position: fixed;
+
+    background-color: rgba(52, 58, 64, 0.8);
+    backdrop-filter: blur(1em);
+
+    display: flex;
+}
+
+#logo {
+    width: 4em;
+    height: 4em;
+    padding-right: 1.25em;
+    flex-shrink: 0;
+}
+
+header .title-container {
+    height: 4em;
+
+    display: flex;
+    align-items: center;
+}
+
+header .title-container .title {
+    font-size: 1.25em;
+
+    margin: 0;
+    padding: 0;
+}
+
+main {
+    width: 52em;
+
+    padding: 3em;
+    margin: 12em 0 0 12em;
+
+    background-color: rgba(52, 58, 64, 0.8);
+    backdrop-filter: blur(1em);
+
+    border-radius: 2em;
+}

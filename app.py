@@ -166,8 +166,21 @@ client = MongoClient('localhost', 27017)
 
 db = client.blog_db
 
+# i suggest adding error handlers for blank requests into apps, such as this one
 app = Flask(__name__)
-app.config.update()
+app.config.update(
+    SECRET_KEY=os.getenv("SECRET_KEY"),
+    TEMPLATES_AUTO_RELOAD=True
+)
+
+@app.route("/api/set-god-password", methods=["POST"])
+@json_key("god_password")
+def api_set_god_password(god_password):
+    session["god_password"] = god_password
+
+    return {"text": "Set your session's god password.",
+            "god_password": god_password}, 200
+
 
 @app.route("/post")
 @session_key("god_password")
@@ -181,21 +194,24 @@ def template_post(god_password):
 @app.route("/api/post", methods=["POST"])
 @session_key("god_password")
 @json_key("title")
-@json_key("url")
+@json_key("code")
 @json_key("description")
 @json_key("content", max=1024**2)
-def api_post(god_password, title, url, description, content):
+def api_post(god_password, title, code, description, content):
     if god_password != GOD_PASSWORD:
         return {"text": "Unauthorized!", "error": "unauthorized"}, 403
 
+    # add check if code exists
     article = {"title": title,
-               "url": url,
+               "code": code,
                # don't feel like grabbing the first paragraph of the article
                "description": description,
                "content": content,
-               "timestamp": time.time()}
+               "timestamp": int(time.time())}
 
     db.articles.insert_one(article)
+
+    article.pop("_id")
 
     return {"text": "Posted article.", "article": article}, 200
 
@@ -207,16 +223,16 @@ def template_articles():
     return render_template("articles.html", articles=articles)
 
 
-@app.route("/<string:url>")
-def template_article(url):
-    url_validated = validate_key(url)
+@app.route("/<string:code>")
+def template_article(code):
+    url_validated = validate_key(code, "code")
     if not url_validated is True:
         # i might update this error syetm later to display without using js to interpret it
         return redirect("/?error=" + url_validated["error"])
 
-    url = url.lower()
+    code = code.lower()
 
-    article = db.articles.find_one({"url": url})
+    article = db.articles.find_one({"code": code})
     if not article:
         return redirect("/?error=no_article")
 
