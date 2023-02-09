@@ -2,6 +2,7 @@ import os
 import string
 import time
 
+from datetime import datetime
 from functools import wraps
 from dotenv import load_dotenv
 
@@ -201,10 +202,11 @@ def api_post(god_password, title, code, description, content):
     if god_password != GOD_PASSWORD:
         return {"text": "Unauthorized!", "error": "unauthorized"}, 403
 
-    # add check if code exists
+    if db.articles.find_one({"code": code}):
+        return {"text": "Code exists!", "error": "code_exists"}, 409
+
     article = {"title": title,
                "code": code,
-               # don't feel like grabbing the first paragraph of the article
                "description": description,
                "content": content,
                "timestamp": int(time.time())}
@@ -227,7 +229,6 @@ def template_articles():
 def template_article(code):
     url_validated = validate_key(code, "code")
     if not url_validated is True:
-        # i might update this error syetm later to display without using js to interpret it
         return redirect("/?error=" + url_validated["error"])
 
     code = code.lower()
@@ -236,7 +237,10 @@ def template_article(code):
     if not article:
         return redirect("/?error=no_article")
 
-    return render_template("article.html", article=article)
+    date_time = datetime.fromtimestamp(article["timestamp"])
+    formatted_time = date_time.strftime("%A, %d %B %Y")
+
+    return render_template("article.html", article=article, formatted_time=formatted_time)
 
 
 if __name__ == "__main__":

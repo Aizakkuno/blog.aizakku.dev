@@ -10,6 +10,9 @@ body {
 
     font-family: 'Noto Sans', sans-serif;
     color: #f1f3f5;
+
+    display: flex;
+    justify-content: center;
 }
 
 header {
@@ -30,22 +33,28 @@ header {
 }
 
 #logo {
-    width: 4em;
-    height: 4em;
-    padding-right: 1.25em;
-    flex-shrink: 0;
+    width: 3.5em;
+    height: 3.5em;
+
+    margin-right: 1.25em;
+
+    border-radius: 3.5em;
+
+    transition: box-shadow 0.25s ease-in-out;
+}
+
+#logo:hover {
+    box-shadow: 0 0 0.25em rgba(173, 181, 189, 0.8);
 }
 
 header .title-container {
-    height: 4em;
+    height: 3.5em;
 
     display: flex;
     align-items: center;
 }
 
 header .title-container .title {
-    font-size: 1.25em;
-
     margin: 0;
     padding: 0;
 }
@@ -53,11 +62,29 @@ header .title-container .title {
 main {
     width: 52em;
 
-    padding: 3em;
-    margin: 12em 0 0 12em;
+    padding: 1em 2em 1em 2em;
+    margin-top: 12em;
 
     background-color: rgba(52, 58, 64, 0.8);
     backdrop-filter: blur(1em);
 
     border-radius: 2em;
+}
+
+h2, h3, h4, h5, h6 {
+    padding: 0;
+    margin: 0;
+}
+
+a, a:visited {
+    color: #099268;
+}
+
+
+.heading {
+    margin-bottom: 0.25em;
+}
+
+time {
+    color: #ced4da;
 }

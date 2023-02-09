@@ -24,13 +24,6 @@
         <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 
         <link rel="stylesheet" href="/static/style.css">
-
-        <script>
-
-            window.onload = function() {
-                document.getElementById("time").innerText = new Date({{ article.timestamp }}).toLocaleString();
-            }
-        </script>
     </head>
     <body>
         <header>
@@ -40,8 +33,9 @@
             </div>
         </header>
         <main>
-            <h1>{{ article.title }}</h1>
-            <time id="time"></time>
+            <h1 class="heading">{{ article.title }}</h1>
+            <time id="time">{{ formatted_time }}</time>
+            <hr>
             {{ article.content|safe }}
         </main>
     </body>
