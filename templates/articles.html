@@ -2,22 +2,22 @@
 <html lang="en">
     <head>
         <!-- Primary Meta Tags -->
-        <title>{{ article.title }} | blog.aizakku.dev</title>
-        <meta name="title" content="{{ article.title }} | blog.aizakku.dev">
-        <meta name="description" content="{{ article.description }}">
+        <title>blog.aizakku.dev</title>
+        <meta name="title" content="blog.aizakku.dev">
+        <meta name="description" content="aizakku's blog">
         <meta name="robots" content="index"/>
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
         <!-- Open Graph / Facebook -->
         <meta property="og:type" content="website">
         <meta property="og:url" content="https://blog.aizakku.dev/">
-        <meta property="og:title" content="{{ article.title }} | blog.aizakku.dev">
-        <meta property="og:description" content="{{ article.description }}">
+        <meta property="og:title" content="blog.aizakku.dev">
+        <meta property="og:description" content="aizakku's blog">
 
         <!-- Twitter -->
         <meta property="twitter:url" content="https://blog.aizakku.dev/">
-        <meta property="twitter:title" content="{{ article.title }} | blog.aizakku.dev">
-        <meta property="twitter:description" content="{{ article.description }}">
+        <meta property="twitter:title" content="blog.aizakku.dev">
+        <meta property="twitter:description" content="aizakku's blog">
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -32,13 +32,21 @@
                     <img src="/static/logo.webp" alt="Logo">
                 </a>
             </nav>
-            <p>{{ article.title }}</p>
+            <p>aizakku's blog</p>
         </header>
         <main>
-            <h1>{{ article.title }}</h1>
-            <time>{{ article.time }}</time>
-            <hr>
-            {{ article.content|safe }}
+            {% for article in articles %}
+            <a href="/{{ article.code }}" class="article">
+                <h1>{{ article.title }}</h1>
+                <time>{{ article.time }}</time>
+                <hr>
+            </a>
+            {% endfor %}
+            <nav>
+                <p>
+                    <a href="https://aizakku.dev">Home</a>・<a href="https://s.aizakku.dev">Link Shortener</a>
+                </p>
+            </nav>
         </main>
     </body>
 </html>

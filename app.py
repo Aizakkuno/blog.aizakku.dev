@@ -221,6 +221,9 @@ def api_post(god_password, title, code, description, content):
 @app.route("/")
 def template_articles():
     articles = list(db.articles.find({}))
+    for article in articles:
+        date_time = datetime.fromtimestamp(article["timestamp"])
+        article["time"] = date_time.strftime("%A, %d %B %Y")
 
     return render_template("articles.html", articles=articles)
 
@@ -238,9 +241,9 @@ def template_article(code):
         return redirect("/?error=no_article")
 
     date_time = datetime.fromtimestamp(article["timestamp"])
-    formatted_time = date_time.strftime("%A, %d %B %Y")
+    article["time"] = date_time.strftime("%A, %d %B %Y")
 
-    return render_template("article.html", article=article, formatted_time=formatted_time)
+    return render_template("article.html", article=article)
 
 
 if __name__ == "__main__":
