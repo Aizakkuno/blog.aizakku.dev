@@ -89,6 +89,8 @@ header img {
 
     border-radius: 3.5em;
 
+    margin-right: 1.25em;
+
     transition: box-shadow 0.25s ease-in-out;
 }
 
